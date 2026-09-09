@@ -38,7 +38,7 @@ npm install -g @anthropic-ai/claude-code
 Then, install Claude Code Router:
 
 ```shell
-npm install -g @musistudio/claude-code-router
+npm install -g @llh911001/claude-code-router
 ```
 
 ### 2. Configuration
@@ -552,7 +552,7 @@ jobs:
 
       - name: Start Claude Code Router
         run: |
-          nohup ~/.bun/bin/bunx @musistudio/claude-code-router@1.0.8 start &
+          nohup ~/.bun/bin/bunx @llh911001/claude-code-router@1.0.8 start &
         shell: bash
 
       - name: Run Claude Code
