@@ -125,15 +125,11 @@ export class OpenAIResponsesTransformer implements Transformer {
       }
 
       if (message.role === "tool") {
-        const toolMessage: any = { ...message };
-        toolMessage.type = "function_call_output";
-        toolMessage.call_id = message.tool_call_id;
-        toolMessage.output = message.content;
-        delete toolMessage.cache_control;
-        delete toolMessage.role;
-        delete toolMessage.tool_call_id;
-        delete toolMessage.content;
-        input.push(toolMessage);
+        input.push({
+          type: "function_call_output",
+          call_id: message.tool_call_id,
+          output: message.content,
+        });
         return;
       }
 
@@ -149,7 +145,11 @@ export class OpenAIResponsesTransformer implements Transformer {
         return;
       }
 
-      input.push(message);
+      // Unified metadata such as thinking is not part of the Responses API schema.
+      input.push({
+        role: message.role,
+        ...(message.content !== undefined ? { content: message.content } : {}),
+      });
     });
 
     (request as any).input = input;
